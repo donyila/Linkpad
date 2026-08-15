@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkPad — پل بین دستگاه‌ها</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="wrap">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <span class="brand-name">LinkPad</span>
+    </div>
+    <div class="topbar-sub">پل ارتباطی درون شبکه محلی</div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-signal" aria-hidden="true">
+      <div class="node node-a">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M4 6h16v10H4z" opacity=".15"/><path fill="currentColor" d="M4 5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h6v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-2v-2h6a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1zm1 2h14v7H5z"/></svg>
+      </div>
+      <div class="pulse-line">
+        <span class="pulse-dot"></span>
+        <span class="pulse-dot"></span>
+        <span class="pulse-dot"></span>
+      </div>
+      <div class="node node-b">
+        <svg viewBox="0 0 24 24" width="20" height="20"><rect x="6" y="2" width="12" height="20" rx="2" fill="currentColor" opacity=".15"/><path fill="currentColor" d="M8 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 2h8v14H8zm4 15.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
+      </div>
+    </div>
+
+    <h1 class="hero-title">این آدرس را در دستگاه دیگر وارد کنید</h1>
+    <p class="hero-desc">مطمئن شوید هر دو دستگاه به یک شبکه Wi‑Fi یا LAN متصل هستند.</p>
+
+    <div class="ip-card">
+      <span class="ip-label">آدرس اتصال</span>
+      <span class="ip-value" id="ipValue">http://{{ local_ip }}:{{ port }}</span>
+      <button class="copy-btn" id="copyIpBtn" title="کپی آدرس">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m0 16H8V7h11z"/></svg>
+      </button>
+    </div>
+    <div class="status-row">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">در حال بررسی اتصال…</span>
+    </div>
+  </section>
+
+  <main class="panels">
+
+    <section class="panel" id="clipboardPanel">
+      <div class="panel-head">
+        <h2>کلیپ‌بورد مشترک</h2>
+        <span class="panel-eyebrow">همگام‌سازی خودکار</span>
+      </div>
+      <textarea id="clipboardArea" placeholder="متنی که اینجا بنویسید، روی دستگاه‌های دیگر هم دیده می‌شود…" spellcheck="false"></textarea>
+      <div class="panel-actions">
+        <button class="btn btn-ghost" id="pasteBtn">جای‌گذاری از کلیپ‌بورد دستگاه</button>
+        <button class="btn btn-ghost" id="copyClipBtn">کپی به کلیپ‌بورد دستگاه</button>
+        <span class="sync-note" id="clipSyncNote"></span>
+      </div>
+    </section>
+
+    <section class="panel" id="filesPanel">
+      <div class="panel-head">
+        <h2>انتقال فایل</h2>
+        <span class="panel-eyebrow" id="fileCountBadge">۰ فایل</span>
+      </div>
+
+      <label class="dropzone" id="dropzone" for="fileInput">
+        <svg viewBox="0 0 24 24" width="30" height="30"><path fill="currentColor" d="M12 2 6 8h4v8h4V8h4l-6-6zm-7 18v-2h14v2z"/></svg>
+        <span class="dz-title">فایل را بکشید و رها کنید</span>
+        <span class="dz-sub">یا برای انتخاب کلیک کنید</span>
+        <input type="file" id="fileInput" multiple hidden>
+      </label>
+
+      <ul class="file-list" id="fileList"></ul>
+    </section>
+
+  </main>
+
+  <footer class="footnote">اجرا‌شده به‌صورت محلی — هیچ داده‌ای به بیرون از شبکه شما ارسال نمی‌شود.</footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
